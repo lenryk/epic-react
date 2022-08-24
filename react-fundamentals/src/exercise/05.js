@@ -14,9 +14,59 @@ import '../box-styles.css'
 // 🐨 also use the style prop to make the font italic
 // 💰 Here are available style attributes: backgroundColor, fontStyle
 
-const smallBox = <div>small lightblue box</div>
-const mediumBox = <div>medium pink box</div>
-const largeBox = <div>large orange box</div>
+const smallBox = (
+  <div
+    className="box--small box"
+    style={{fontStyle: 'italic', backgroundColor: 'lightblue'}}
+  >
+    small lightblue box
+  </div>
+)
+const mediumBox = (
+  <div
+    className="box--medium box"
+    style={{fontStyle: 'italic', backgroundColor: 'pink'}}
+  >
+    medium pink box
+  </div>
+)
+const largeBox = (
+  <div
+    className="box--large box"
+    style={{fontStyle: 'italic', backgroundColor: 'orange'}}
+  >
+    large orange box
+  </div>
+)
+
+// In this function we combine static className with the user inputted to make it more dynamic
+// We also add our own style to the existing style object (remember, the order matters!)
+// Default className to empty string to stop it showing as undefined (can also add .trim() to remove space)
+function Box({className = '', style, children, ...rest}) {
+  return (
+    <div
+      className={`${className} box`}
+      style={{...style, fontStyle: 'italic'}}
+      {...rest}
+    >
+      {children}
+    </div>
+  )
+}
+
+// In this function we introduce a size attribute which will control the final className
+// This makes the function easier to use by just sending "small" or "large" as the box size instead of a className
+function BoxTwo({size, style, children, ...rest}) {
+  return (
+    <div
+      className={`box--${size} box`}
+      style={{...style, fontStyle: 'italic'}}
+      {...rest}
+    >
+      {children}
+    </div>
+  )
+}
 
 function App() {
   return (
@@ -24,6 +74,12 @@ function App() {
       {smallBox}
       {mediumBox}
       {largeBox}
+      <Box className="box--small" style={{backgroundColor: 'lightblue'}}>
+        small lightblue box
+      </Box>
+      <BoxTwo size="small" style={{backgroundColor: 'lightblue'}}>
+        small lightblue box
+      </BoxTwo>
     </div>
   )
 }
